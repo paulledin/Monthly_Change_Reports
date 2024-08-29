@@ -153,6 +153,26 @@ def getCharterChgsTable(month):
     'New Charter Type': 'string',
     }))
 
+def getNewCUsTable(month):
+    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/new_cus_' + convertDateToSystem(month) + '.csv', dtype={
+    'NIMBLE_CUNA_ID': 'string',
+    'Name': 'string',
+    'Address': 'string',
+    'City': 'string',
+    'State': 'string',
+    'Zip Code': 'string'
+    }))
+
+def getAFLTable(month, aflType):
+    if (aflType == 'cuna'):
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Legacycuna_' + convertDateToSystem(month) + '.csv'))
+    elif (aflType == 'nafcu'):
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Legacynafcu_' + convertDateToSystem(month) + '.csv'))
+    else:
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Either_' + convertDateToSystem(month) + '.csv'))
+        
+    return df_afl_table
+
 def getPreviousSystemMonth(month):
     system_month = int(convertDateToSystem(month)[4:])
     prev_system_year = convertDateToSystem(month)[:4]
@@ -181,9 +201,8 @@ def get_report_periods_for_display():
 
     return df_retVal
     
-def format_currency(amount):
-    return '${:,.2f}'.format(amount)
-
+def format_number(amount):
+    return '{:,.0f}'.format(amount)
 
 ###############################################################################
 #Start building Streamlit App
@@ -261,13 +280,18 @@ column_configuration = {
 }
      
 with st.sidebar:
-    st.title('America\'s Credit Unions - Monthly Change Reports')
+    st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
+    st.title('Monthly Change Reports')
     
     report_type = ['Status','Affiliation', 'Name', 'Address', 'Miscellaneous', 'New']
     selected_report_type = st.selectbox('Report Type', report_type)
     
     month = report_periods['report_periods_formatted']
     selected_month = st.selectbox('Month', month)
+
+df_afl_table_cuna = getAFLTable(selected_month, 'cuna')  
+df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
+df_afl_table_either = getAFLTable(selected_month, 'either')    
     
 df_mergers = getMergersTable(selected_month)
 df_pending = getPendingTable(selected_month)
@@ -277,19 +301,65 @@ df_mailing_address_chgs = getAddressChgsTable(selected_month, 'mailing')
 df_street_address_chgs = getAddressChgsTable(selected_month, 'street')
 df_ceo_chgs = getCEOChgsTable(selected_month)
 df_charter_chgs = getCharterChgsTable(selected_month)
+df_new_cus = getNewCUsTable(selected_month)
 
 col = st.columns((1.5, 6.5), gap='medium')
 with col[0]:          
-    st.markdown('#### Summary')
+    st.markdown('### Summary')
+    st.markdown('---')
+    st.markdown('*Active Credit Unions:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 5])) + '**')
+    st.markdown('*Affiliated (CUNA):* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 1])) + '**')
+    st.markdown('*Affiliated (NAFCU):* ' + '**' + str(format_number(df_afl_table_nafcu.iloc[len(df_afl_table_nafcu) - 1, 1]))  + '**')
+    st.markdown('*Affiliated (Either):* ' + '**' + str(format_number(df_afl_table_either.iloc[len(df_afl_table_either) - 1, 1])) + '**')
+    st.markdown('---')
+    
+    st.markdown('**Affiliation Ratios**')
+    st.markdown('*Credit Unions (CUNA):* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 10] * 100, 2))  + '%**')
+    st.markdown('*Members (CUNA):* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 11] * 100, 2))  + '%**')
+    st.markdown('*Assets (CUNA):* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 12] * 100, 2))  + '%**')
+    st.markdown('---')
+    st.markdown('*Credit Unions (NAFCU):* ' + '**' + str(round(df_afl_table_nafcu.iloc[len(df_afl_table_nafcu) - 1, 10] * 100, 2))  + '%**')
+    st.markdown('*Members (NAFCU):* ' + '**' + str(round(df_afl_table_nafcu.iloc[len(df_afl_table_nafcu) - 1, 11] * 100, 2))  + '%**')
+    st.markdown('*Assets (NAFCU):* ' + '**' + str(round(df_afl_table_nafcu.iloc[len(df_afl_table_nafcu) - 1, 12] * 100, 2))  + '%**')
+    st.markdown('---')
+    st.markdown('*Credit Unions (Either):* ' + '**' + str(round(df_afl_table_either.iloc[len(df_afl_table_either) - 1, 10] * 100, 2))  + '%**')
+    st.markdown('*Members (Either):* ' + '**' + str(round(df_afl_table_either.iloc[len(df_afl_table_either) - 1, 11] * 100, 2))  + '%**')
+    st.markdown('*Assets (Either):* ' + '**' + str(round(df_afl_table_either.iloc[len(df_afl_table_either) - 1, 12] * 100, 2))  + '%**')
+    
+    st.markdown('---')
+    st.markdown('**Monthly Totals**')
+    st.markdown('*New Credit Unions:* ' + '**' + str(len(df_new_cus)) + '**')
+    st.markdown('*Name Changes:* ' + '**' + str(len(df_name_chgs)) + '**')
+    st.markdown('*Mergers:* ' + '**' + str(len(df_mergers)-1) + '**')
+    st.markdown('*Started Merger/Liq:* ' + '**' + str(len(df_pending)-1) + '**')
+    st.markdown('*Liquidations:* ' + '**' + str(len(df_liquidated)-1) + '**')
+    st.markdown('---')
+    
+    df_cuna_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
+    df_nafcu_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
+    df_either_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
+    
+    st.markdown('**Reaffiliations**')
+    st.markdown('*Reaffiliations(CUNA):* ' + '**' + str(len(df_cuna_reafl_chgs)-1) + '**')
+    st.markdown('*Members:* ' + '**' + str(format_number(df_cuna_reafl_chgs.iloc[len(df_cuna_reafl_chgs) - 1, 4])) + '**')
+    st.markdown('---')
+    st.markdown('*Reaffiliations(NAFCU):* ' + '**' + str(len(df_nafcu_reafl_chgs)-1) + '**')
+    st.markdown('*Members:* ' + '**' + str(format_number(df_nafcu_reafl_chgs.iloc[len(df_nafcu_reafl_chgs) - 1, 4])) + '**')
+    st.markdown('---')
+    st.markdown('*Reaffiliations(Either):* ' + '**' + str(len(df_either_reafl_chgs)-1) + '**')
+    st.markdown('*Members:* ' + '**' + str(format_number(df_either_reafl_chgs.iloc[len(df_either_reafl_chgs) - 1, 4])) + '**')
+    st.markdown('---')
 
 with col[1]:
     st.markdown('#### Details')
+    st.markdown('---')
 
     if (selected_report_type == 'Affiliation'):
         st.markdown('#### Affiliation Changes')
         
         affiliation_type = ['Legacy CUNA','Legacy NAFCU', 'Either / At least 1 Legacy Org']
         selected_affiliation_type = st.selectbox('Affiliation Type', affiliation_type)
+        st.markdown('---')
         
         if (selected_affiliation_type == 'Legacy CUNA'):
             df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
@@ -307,13 +377,14 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )
-        
+        st.markdown('---')
         st.markdown('#### Disaffiliations - ' + selected_affiliation_type)
         st.dataframe(data = df_disafl_chgs, 
                      column_config=column_configuration,
                      use_container_width = True, 
                      hide_index = True,
                      )
+        st.markdown('---')
 
     elif (selected_report_type == 'Name'):
         st.markdown('#### Name Changes')
@@ -322,6 +393,7 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )
+        
     elif (selected_report_type == 'Address'):
         st.markdown('#### Mailing Address Changes')
         st.dataframe(data = df_mailing_address_chgs, 
@@ -335,6 +407,7 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )
+        
     elif (selected_report_type == 'Miscellaneous'):
         st.markdown('#### Manager Changes')
         st.dataframe(data = df_ceo_chgs, 
@@ -348,6 +421,15 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )
+        
+    elif (selected_report_type == 'New'):
+            st.markdown('#### New Credit Unions')
+            st.dataframe(data = df_new_cus, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )
+            
     else:
         st.markdown('#### Merged Credit Unions')
         st.dataframe(data = df_mergers, 
