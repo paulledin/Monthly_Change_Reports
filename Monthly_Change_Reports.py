@@ -62,106 +62,114 @@ def get_report_periods():
     return (retVal)
 
 def getMergersTable(month):
-    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/merged_cus_' + convertDateToSystem(month) + '.csv', dtype={
-    'NIMBLE_CUNA_ID': 'string',
-    'NAME': 'string',
-    'State': 'string',
-    'Assets': 'int64',
-    'Members': 'int64',
-    'Employees': 'int64',
-    'SURVIVOR_ID': 'string',
-    'Status Chg Date': 'string'
-    }))
+    df_mergers_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/merged_cus_' + convertDateToSystem(month) + '.csv', dtype={
+                                                'NIMBLE_CUNA_ID': 'string',
+                                                'NAME': 'string',
+                                                'State': 'string',
+                                                'Assets': 'int64',
+                                                'Members': 'int64',
+                                                'Employees': 'int64',
+                                                'SURVIVOR_ID': 'string',
+                                                'STATUS_CHG_DATE': 'string'
+                                                }))
+    df_mergers_table.rename(columns={'SURVIVOR_ID' : 'Survivor NIMLBE_CUNA_ID', 'STATUS_CHG_DATE' : 'Status Change Date'}, inplace=True)
+    
+    return (df_mergers_table)
 
 def getPendingTable(month):
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/pending_cus_' + convertDateToSystem(month) + '.csv', dtype={
-    'NIMBLE_CUNA_ID': 'string',
-    'NAME': 'string',
-    'State': 'string',
-    'Assets': 'int64',
-    'Members': 'int64',
-    'Employees': 'int64'
-    }))
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'NAME': 'string',
+                                    'State': 'string',
+                                    'Assets': 'int64',
+                                    'Members': 'int64',
+                                    'Employees': 'int64'
+                                    }))
 
 def getLiquidationsTable(month):
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/liquidated_cus_' + convertDateToSystem(month) + '.csv', dtype={
-    'NIMBLE_CUNA_ID': 'string',
-    'NAME': 'string',
-    'State': 'string',
-    'Assets': 'int64',
-    'Members': 'int64',
-    'Employees': 'int64'
-    }))
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'NAME': 'string',
+                                    'State': 'string',
+                                    'Assets': 'int64',
+                                    'Members': 'int64',
+                                    'Employees': 'int64'
+                                    }))
 
 def getNameChgsTable(month):
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/name_chgs_' + convertDateToSystem(month) + '.csv', dtype={
-    'NIMBLE_CUNA_ID': 'string',
-    'Old Name': 'string',
-    'State': 'string',
-    'New Name': 'string'
-    }))
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'Old Name': 'string',
+                                    'State': 'string',
+                                    'New Name': 'string'
+                                    }))
 
 def getCEOChgsTable(month):
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/ceo_chgs_' + convertDateToSystem(month) + '.csv', dtype={
-    'NIMBLE_CUNA_ID': 'string',
-    'Old Name': 'string',
-    'State': 'string',
-    'New Name': 'string'
-    }))
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'Name': 'string',
+                                    'State': 'string',
+                                    'Old Manager': 'string',
+                                    'New Manager': 'string'
+                                    }))
 
 def getAddressChgsTable(month, addressType):
     if (addressType == 'mailing'):
         df_address_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/mailing_address_chgs_' + convertDateToSystem(month) + '.csv', dtype={
-                                                'NIMBLE_CUNA_ID': 'string',
-                                                'Old Name': 'string',
-                                                'State': 'string',
-                                                'New Name': 'string'
-                                                }))
+                                                   'NIMBLE_CUNA_ID': 'string',
+                                                   'Name': 'string',
+                                                   'Old Mailing Address': 'string',
+                                                   'New Mailing Address': 'string'
+                                                   }))
     else:
         df_address_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/street_address_chgs_' + convertDateToSystem(month) + '.csv', dtype={
-                                                'NIMBLE_CUNA_ID': 'string',
-                                                'Old Name': 'string',
-                                                'State': 'string',
-                                                'New Name': 'string'
-                                                }))
+                                                   'NIMBLE_CUNA_ID': 'string',
+                                                   'Name': 'string',
+                                                   'Old Street Address': 'string',
+                                                   'New Street Address': 'string'
+                                                   }))
     return df_address_chgs
 
 def getAFLChgsTables(month, aflChgType, aflType):
     if (aflChgType == 'REAFL'):
         df_afl_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/reafl_chgs_' + aflType + '_' + convertDateToSystem(month) + '.csv', dtype={
-                                            'NIMBLE_CUNA_ID': 'string',
-                                            'Old Name': 'string',
-                                            'State': 'string',
-                                            'New Name': 'string'
-                                            }))
+                                               'NIMBLE_CUNA_ID': 'string',
+                                               'Name': 'string',
+                                               'State': 'string',
+                                               'Assets': 'int64',
+                                               'Members': 'int64',
+                                               'Employees': 'int64'
+                                               }))
     elif (aflChgType == 'DISAFL'):
         df_afl_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/disafl_chgs_' + aflType + '_' + convertDateToSystem(month) + '.csv', dtype={
-                                             'NIMBLE_CUNA_ID': 'string',
-                                             'Old Name': 'string',
-                                             'State': 'string',
-                                             'New Name': 'string'
-                                             }))
+                                               'NIMBLE_CUNA_ID': 'string',
+                                               'Name': 'string',
+                                               'State': 'string',
+                                               'Assets': 'int64',
+                                               'Members': 'int64',
+                                               'Employees': 'int64'
+                                               }))
     return df_afl_chgs
 
 def getCharterChgsTable(month):
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/charter_chgs_' + convertDateToSystem(month) + '.csv', dtype={
-    'NIMBLE_CUNA_ID': 'string',
-    'Name': 'string',
-    'Old Charter': 'string',
-    'Old Charter Type': 'string',
-    'New Charter': 'string',
-    'New Charter Type': 'string',
-    }))
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'Name': 'string',
+                                    'Old Charter': 'string',
+                                    'Old Charter Type': 'string',
+                                    'New Charter': 'string',
+                                    'New Charter Type': 'string',
+                                    }))
 
 def getNewCUsTable(month):
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/new_cus_' + convertDateToSystem(month) + '.csv', dtype={
-    'NIMBLE_CUNA_ID': 'string',
-    'Name': 'string',
-    'Address': 'string',
-    'City': 'string',
-    'State': 'string',
-    'Zip Code': 'string'
-    }))
+                                    'NIMBLE_CUNA_ID': 'string',
+                                    'Name': 'string',
+                                    'Address': 'string',
+                                    'City': 'string',
+                                    'State': 'string',
+                                    'Zip Code': 'string'
+                                    }))
 
 def getAFLTable(month, aflType):
     if (aflType == 'cuna'):
@@ -213,7 +221,6 @@ st.set_page_config(
     page_title="America's Credit Unions",
     layout="wide",
     initial_sidebar_state="expanded")
-alt.themes.enable("dark") 
 
 column_configuration = {
     "State": st.column_config.TextColumn(
@@ -393,7 +400,7 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )
-        
+        st.markdown('---')    
     elif (selected_report_type == 'Address'):
         st.markdown('#### Mailing Address Changes')
         st.dataframe(data = df_mailing_address_chgs, 
@@ -401,12 +408,14 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )
+        st.markdown('---')
         st.markdown('#### Street Address Changes')
         st.dataframe(data = df_street_address_chgs, 
                      column_config=column_configuration,
                      use_container_width = True, 
                      hide_index = True,
                      )
+        st.markdown('---')
         
     elif (selected_report_type == 'Miscellaneous'):
         st.markdown('#### Manager Changes')
@@ -415,12 +424,14 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )
+        st.markdown('---')
         st.markdown('#### Charter Changes')
         st.dataframe(data = df_charter_chgs, 
                      column_config=column_configuration,
                      use_container_width = True, 
                      hide_index = True,
                      )
+        st.markdown('---')
         
     elif (selected_report_type == 'New'):
             st.markdown('#### New Credit Unions')
@@ -429,6 +440,7 @@ with col[1]:
                          use_container_width = True, 
                          hide_index = True,
                          )
+            st.markdown('---')
             
     else:
         st.markdown('#### Merged Credit Unions')
@@ -437,19 +449,20 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )
-    
+        st.markdown('---')
         st.markdown('#### Pending Merger/Liquidation Credit Unions')
         st.dataframe(data = df_pending, 
                      column_config=column_configuration,
                      use_container_width = True, 
                      hide_index = True,
                      )
-    
+        st.markdown('---')
         st.markdown('#### Liquidated Credit Unions')
         st.dataframe(data = df_liquidated, 
                      column_config=column_configuration,
                      use_container_width = True, 
                      hide_index = True,
                      )
+        st.markdown('---')
 
     
