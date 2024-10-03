@@ -72,7 +72,7 @@ def getMergersTable(month):
                                                 'SURVIVOR_ID': 'string',
                                                 'STATUS_CHG_DATE': 'string'
                                                 }))
-    df_mergers_table.rename(columns={'SURVIVOR_ID' : 'Survivor NIMLBE_CUNA_ID', 'STATUS_CHG_DATE' : 'Status Change Date'}, inplace=True)
+    df_mergers_table.rename(columns={'SURVIVOR_ID' : 'Survivor NIMBLE_CUNA_ID', 'STATUS_CHG_DATE' : 'Status Change Date'}, inplace=True)
     
     return (df_mergers_table)
 
