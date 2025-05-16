@@ -229,6 +229,32 @@ def get_report_periods_for_display_from_db():
 def get_report_periods_from_db():
     return (dbConn.session().sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
 
+@st.cache_data
+def getTableAFLTable_from_db(afl_type, group_by, month, table_number):
+    sqlStmt = "SELECT * FROM monthly_report."
+    
+    if(afl_type == 'Legacy CUNA'):
+        aflType = 'Legacycuna'
+    elif(afl_type == 'Legacy NAFCU'):
+        aflType = 'Legacynafcu'
+    elif(afl_type == 'Member of Both'):
+        aflType = 'Both'
+    else:
+        aflType = 'Either'
+    sqlStmt += aflType + '.afl_table_' + table_number
+    
+    if(group_by == 'League'):
+        groupBy = 'ByLeague'
+    elif(group_by == 'Asset Class(9)'):
+        groupBy = 'ByAcl_9'
+    elif(group_by == 'Asset Class(13)'):
+        groupBy = 'ByAcl_13'
+    else:
+        groupBy = 'ByState'
+    sqlStmt += '_' + groupBy + '_' + convertDateToSystem(month)
+
+    return (dbConn.session().sql(sqlStmt).to_pandas())
+
 
 ###############################################################################
 #Start building Streamlit App
