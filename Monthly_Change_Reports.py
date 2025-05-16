@@ -9,7 +9,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
-#import plotly.express as px
+
+thePassPhrase = st.secrets["thePassPhrase"]
+dbConn = st.connection("snowflake")
 
 ###############################################################################
 #Function Definitions
@@ -212,11 +214,14 @@ def get_report_periods_for_display():
 def format_number(amount):
     return '{:,.0f}'.format(amount)
 
+@st.cache_data
+def get_report_periods_from_db():
+    return (dbConn.session().sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
+
+
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
-thePassPhrase = st.secrets["thePassPhrase"]
-
 report_periods = get_report_periods_for_display()  
 
 st.set_page_config(
