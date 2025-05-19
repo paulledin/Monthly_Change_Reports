@@ -230,7 +230,7 @@ def get_report_periods_from_db():
     return (dbConn.session().sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
 
 @st.cache_data
-def getTableAFLTable_from_db(afl_type, group_by, month, table_number):
+def getTableAFLTable_from_db(month, afl_type):
     sqlStmt = "SELECT * FROM monthly_report."
     
     if(afl_type == 'Legacy CUNA'):
@@ -241,20 +241,25 @@ def getTableAFLTable_from_db(afl_type, group_by, month, table_number):
         aflType = 'Both'
     else:
         aflType = 'Either'
-    sqlStmt += aflType + '.afl_table_' + table_number
+    sqlStmt += aflType + '.afl_table_1'
     
-    if(group_by == 'League'):
-        groupBy = 'ByLeague'
-    elif(group_by == 'Asset Class(9)'):
-        groupBy = 'ByAcl_9'
-    elif(group_by == 'Asset Class(13)'):
-        groupBy = 'ByAcl_13'
-    else:
-        groupBy = 'ByState'
-    sqlStmt += '_' + groupBy + '_' + convertDateToSystem(month)
+    sqlStmt += '_' + convertDateToSystem(month)
+
+    st.write(sqlStmt)
 
     return (dbConn.session().sql(sqlStmt).to_pandas())
 
+'''
+def getAFLTable(month, aflType):
+    if (aflType == 'cuna'):
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Legacycuna_' + convertDateToSystem(month) + '.csv'))
+    elif (aflType == 'nafcu'):
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Legacynafcu_' + convertDateToSystem(month) + '.csv'))
+    else:
+        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Either_' + convertDateToSystem(month) + '.csv'))
+        
+    return df_afl_table
+'''
 
 ###############################################################################
 #Start building Streamlit App
