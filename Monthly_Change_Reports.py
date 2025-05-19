@@ -400,14 +400,8 @@ else:
         df_either_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
     
         st.markdown('**Reaffiliations**')
-        st.markdown('*Reaffiliations(CUNA):* ' + '**' + str(len(df_cuna_reafl_chgs)-1) + '**')
+        st.markdown('*Reaffiliations:* ' + '**' + str(len(df_cuna_reafl_chgs)-1) + '**')
         st.markdown('*Members:* ' + '**' + str(format_number(df_cuna_reafl_chgs.iloc[len(df_cuna_reafl_chgs) - 1, 4])) + '**')
-        st.markdown('---')
-        st.markdown('*Reaffiliations(NAFCU):* ' + '**' + str(len(df_nafcu_reafl_chgs)-1) + '**')
-        st.markdown('*Members:* ' + '**' + str(format_number(df_nafcu_reafl_chgs.iloc[len(df_nafcu_reafl_chgs) - 1, 4])) + '**')
-        st.markdown('---')
-        st.markdown('*Reaffiliations(Either):* ' + '**' + str(len(df_either_reafl_chgs)-1) + '**')
-        st.markdown('*Members:* ' + '**' + str(format_number(df_either_reafl_chgs.iloc[len(df_either_reafl_chgs) - 1, 4])) + '**')
         st.markdown('---')
 
     with col[1]:
