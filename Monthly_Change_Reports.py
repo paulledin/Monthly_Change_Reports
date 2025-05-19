@@ -350,7 +350,7 @@ else:
         month = report_periods['report_periods_formatted']
         selected_month = st.selectbox('Month', month)
 
-    df_afl_table_cuna = getTableAFLTable_from_db(selected_month, 'cuna'):
+    df_afl_table_cuna = getTableAFLTable_from_db(selected_month, 'cuna')
     
     #df_afl_table_cuna = getAFLTable(selected_month, 'cuna')  
     df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
