@@ -247,8 +247,8 @@ def getTableAFLTable_from_db(month, afl_type):
 
     st.write(sqlStmt)
 
-    return (True)
-    #return (dbConn.session().sql(sqlStmt).to_pandas())
+    #return (True)
+    return (dbConn.session().sql(sqlStmt).to_pandas())
 
 '''
 def getAFLTable(month, aflType):
