@@ -436,8 +436,6 @@ else:
             else:
                 df_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'either')
                 df_disafl_chgs = getAFLChgsTableFromDB(selected_month, 'DISAFL', 'either')
-                #df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
-                #df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'either')
             
             st.markdown('#### Reaffiliations - ' + selected_affiliation_type)
             st.dataframe(data = df_reafl_chgs, 
