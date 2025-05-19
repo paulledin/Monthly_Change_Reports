@@ -241,9 +241,9 @@ def getTableAFLTable_from_db(month, afl_type):
         aflType = 'Both'
     else:
         aflType = 'Either'
-    sqlStmt += aflType + '.afl_table_1'
+    sqlStmt += aflType + '.afl_table_1_ByState' + '_' + convertDateToSystem(month)
     
-    sqlStmt += '_' + convertDateToSystem(month)
+    #sqlStmt += '_' + convertDateToSystem(month)
 
     st.write(sqlStmt)
 
