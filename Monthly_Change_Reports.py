@@ -265,6 +265,8 @@ def getChangeTableFromDB(month, table_name):
         sqlStmt += 'ceo_chgs' + '_' + convertDateToSystem(month)
     elif(table_name == 'charter_chgs'):
         sqlStmt += 'charter_chgs' + '_' + convertDateToSystem(month)
+    elif(table_name == 'new_cus'):
+        sqlStmt += 'new_cus' + '_' + convertDateToSystem(month)
 
     return (dbConn.session().sql(sqlStmt).to_pandas())
 
@@ -368,10 +370,7 @@ else:
     df_street_address_chgs = getChangeTableFromDB(selected_month, 'street_address_chgs')
     df_ceo_chgs = getChangeTableFromDB(selected_month, 'ceo_chgs')
     df_charter_chgs = getChangeTableFromDB(selected_month, 'charter_chgs')
-
-
-    #df_charter_chgs = getCharterChgsTable(selected_month)
-    df_new_cus = getNewCUsTable(selected_month)
+    df_new_cus = getChangeTableFromDB(selected_month, 'new_cus')
 
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
