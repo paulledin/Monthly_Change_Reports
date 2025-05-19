@@ -275,7 +275,8 @@ def getAFLChgsTableFromDB(month, chg_type, afl_type):
     sqlStmt = "SELECT * FROM monthly_report.change_reports."
     
     if(chg_type == 'REAFL'):
-        sqlStmt =+ "reafl_chgs_" + afl_type + "_" + convertDateToSystem(month)
+        #sqlStmt =+ "reafl_chgs_" + afl_type + "_" + convertDateToSystem(month)
+        sqlStmt =+ "reafl_chgs_" 
     elif(chg_type == 'DISAFL'):
         sqlStmt =+ "disafl_chgs_" + afl_type + "_" + convertDateToSystem(month)
 
