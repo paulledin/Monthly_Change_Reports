@@ -407,13 +407,9 @@ else:
         st.markdown('*Liquidations:* ' + '**' + str(len(df_liquidated)-1) + '**')
         st.markdown('---')
     
-        #df_cuna_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
         df_cuna_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'cuna')
         df_nafcu_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'nafcu')
         df_either_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'either')
-
-        #df_nafcu_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
-        #df_either_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
     
         st.markdown('**Reaffiliations**')
         st.markdown('*Reaffiliations:* ' + '**' + str(len(df_cuna_reafl_chgs)-1) + '**')
