@@ -279,8 +279,6 @@ def getAFLChgsTableFromDB(month, chg_type, afl_type):
     elif(chg_type == 'DISAFL'):
         sqlStmt += "disafl_chgs_" + afl_type + "_" + convertDateToSystem(month) 
 
-    st.write(sqlStmt)
-
     return (dbConn.session().sql(sqlStmt).to_pandas())
 
 '''
