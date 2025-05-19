@@ -298,9 +298,9 @@ if (passphrase != thePassPhrase):
         st.markdown('### Please try again or contact: pledin@americascreditunions.org for assistance.')
 else:  
     column_configuration = {
-        "Affiliated CUs": st.column_config.NumberColumn(
-        "Total Affiliated CUs",
-        help="Number of Affiliated Credit Unions",
+        "Assets": st.column_config.NumberColumn(
+        "Assets",
+        help="Total Assets",
         min_value=0,
         max_value=100000,
         step=1,
