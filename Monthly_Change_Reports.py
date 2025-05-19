@@ -251,25 +251,13 @@ def getChangeTableFromDB(month, table_name):
     
     if(table_name == 'mergers'):
         sqlStmt += 'merged_cus' + '_' + convertDateToSystem(month)
+    elif(table_name == 'pending'):
+        sqlStmt += 'pending_cus' + '_' + convertDateToSystem(month)
 
     
     return (dbConn.session().sql(sqlStmt).to_pandas())
 
-    '''
-    df_mergers_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/merged_cus_' + convertDateToSystem(month) + '.csv', dtype={
-                                                'NIMBLE_CUNA_ID': 'string',
-                                                'NAME': 'string',
-                                                'State': 'string',
-                                                'Assets': 'int64',
-                                                'Members': 'int64',
-                                                'Employees': 'int64',
-                                                'SURVIVOR_ID': 'string',
-                                                'STATUS_CHG_DATE': 'string'
-                                                }))
-    df_mergers_table.rename(columns={'SURVIVOR_ID' : 'Survivor NIMBLE_CUNA_ID', 'STATUS_CHG_DATE' : 'Status Change Date'}, inplace=True)
-    
-    return (df_mergers_table)
-    '''
+
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
@@ -367,9 +355,10 @@ else:
     #df_afl_table_either = getAFLTable(selected_month, 'either')    
     
     df_mergers = getChangeTableFromDB(selected_month, 'mergers')
+    df_pending = getChangeTableFromDB(selected_month, 'pending')
     #df_mergers = getMergersTable(selected_month)
     
-    df_pending = getPendingTable(selected_month)
+    #df_pending = getPendingTable(selected_month)
     df_liquidated = getLiquidationsTable(selected_month)
     df_name_chgs = getNameChgsTable(selected_month)
     df_mailing_address_chgs = getAddressChgsTable(selected_month, 'mailing')
