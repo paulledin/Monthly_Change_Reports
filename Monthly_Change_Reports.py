@@ -243,24 +243,7 @@ def getTableAFLTable_from_db(month, afl_type):
         aflType = 'Either'
     sqlStmt += aflType + '.afl_table_1_ByState' + '_' + convertDateToSystem(month)
     
-    #sqlStmt += '_' + convertDateToSystem(month)
-
-    st.write(sqlStmt)
-
-    #return (True)
     return (dbConn.session().sql(sqlStmt).to_pandas())
-
-'''
-def getAFLTable(month, aflType):
-    if (aflType == 'cuna'):
-        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Legacycuna_' + convertDateToSystem(month) + '.csv'))
-    elif (aflType == 'nafcu'):
-        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Legacynafcu_' + convertDateToSystem(month) + '.csv'))
-    else:
-        df_afl_table = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_ByState_Either_' + convertDateToSystem(month) + '.csv'))
-        
-    return df_afl_table
-'''
 
 ###############################################################################
 #Start building Streamlit App
