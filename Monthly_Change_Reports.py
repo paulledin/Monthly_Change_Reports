@@ -387,7 +387,6 @@ else:
         st.markdown('*Assets:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 12] * 100, 2))  + '%**')
         st.markdown('---')
     
-        st.markdown('---')
         st.markdown('**Monthly Totals**')
         st.markdown('*New Credit Unions:* ' + '**' + str(len(df_new_cus)) + '**')
         st.markdown('*Name Changes:* ' + '**' + str(len(df_name_chgs)) + '**')
