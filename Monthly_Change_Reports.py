@@ -270,6 +270,41 @@ def getChangeTableFromDB(month, table_name):
 
     return (dbConn.session().sql(sqlStmt).to_pandas())
 
+@st.cache_data
+def getAFLChgsTableFromDB(month, chg_type, afl_type):
+    sqlStmt = "SELECT * FROM monthly_report.change_reports."
+    
+    if(chg_type == 'REAFL'):
+        sqlStmt =+ "reafl_chgs_" + afl_type + "_" + convertDateToSystem(month)
+    elif(chg_type == 'DISAFL'):
+        sqlStmt =+ "disafl_chgs_" + afl_type + "_" + convertDateToSystem(month)
+
+
+    return (dbConn.session().sql(sqlStmt).to_pandas())
+
+'''
+def getAFLChgsTables(month, aflChgType, aflType):
+    if (aflChgType == 'REAFL'):
+        df_afl_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/reafl_chgs_' + aflType + '_' + convertDateToSystem(month) + '.csv', dtype={
+                                               'NIMBLE_CUNA_ID': 'string',
+                                               'Name': 'string',
+                                               'State': 'string',
+                                               'Assets': 'int64',
+                                               'Members': 'int64',
+                                               'Employees': 'int64'
+                                               }))
+    elif (aflChgType == 'DISAFL'):
+        df_afl_chgs = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/disafl_chgs_' + aflType + '_' + convertDateToSystem(month) + '.csv', dtype={
+                                               'NIMBLE_CUNA_ID': 'string',
+                                               'Name': 'string',
+                                               'State': 'string',
+                                               'Assets': 'int64',
+                                               'Members': 'int64',
+                                               'Employees': 'int64'
+                                               }))
+    return df_afl_chgs
+'''
+
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
@@ -395,7 +430,10 @@ else:
         st.markdown('*Liquidations:* ' + '**' + str(len(df_liquidated)-1) + '**')
         st.markdown('---')
     
-        df_cuna_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
+        #df_cuna_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
+        df_cuna_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'cuna')
+
+
         df_nafcu_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
         df_either_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
     
