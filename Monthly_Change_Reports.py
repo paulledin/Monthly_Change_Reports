@@ -335,11 +335,11 @@ else:
 
     df_afl_table_cuna = getTableAFLTable_from_db(selected_month, 'cuna')
     df_afl_table_nafcu = getTableAFLTable_from_db(selected_month, 'nafcu')
-
+    df_afl_table_either = getTableAFLTable_from_db(selected_month, 'either')
 
     #df_afl_table_cuna = getAFLTable(selected_month, 'cuna')  
     #df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
-    df_afl_table_either = getAFLTable(selected_month, 'either')    
+    #df_afl_table_either = getAFLTable(selected_month, 'either')    
     
     df_mergers = getMergersTable(selected_month)
     df_pending = getPendingTable(selected_month)
