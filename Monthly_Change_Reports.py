@@ -429,13 +429,12 @@ else:
         
             if (selected_affiliation_type == 'Legacy CUNA'):
                 df_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'cuna')
-                df_disafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'cuna')
-
-                #df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
-                #df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'cuna')
+                df_disafl_chgs = getAFLChgsTableFromDB(selected_month, 'DISAFL', 'cuna')
             elif (selected_affiliation_type == 'Legacy NAFCU'):
-                df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
-                df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'nafcu')
+                df_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'nafcu')
+                df_disafl_chgs = getAFLChgsTableFromDB(selected_month, 'DISAFL', 'nafcu')
+                #df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
+                #df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'nafcu')
             else:
                 df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
                 df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'either')
