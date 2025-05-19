@@ -298,6 +298,80 @@ if (passphrase != thePassPhrase):
         st.markdown('### Please try again or contact: pledin@americascreditunions.org for assistance.')
 else:  
     column_configuration = {
+        "Affiliated CUs": st.column_config.NumberColumn(
+        "Total Affiliated CUs",
+        help="Number of Affiliated Credit Unions",
+        min_value=0,
+        max_value=100000,
+        step=1,
+        format="localized",),
+        "Non Affiliated CUs": st.column_config.NumberColumn(
+        "Non Affiliated CUs",
+        help="Number of Non-Affiliated Credit Unions",
+        min_value=0,
+        max_value=100000,
+        step=1,
+        format="localized",),
+        "State Chartered": st.column_config.NumberColumn(
+        "State Chartered CUs",
+        help="Number of State Chartered Credit Unions",
+        min_value=0,
+        max_value=100000,
+        step=1,
+        format="localized",),
+       "Fed Chartered": st.column_config.NumberColumn(
+        "Fed Chartered CUs",
+        help="Number of Federally Chartered Credit Unions",
+        min_value=0,
+        max_value=100000,
+        step=1,
+        format="localized",),
+        "Total CUs": st.column_config.NumberColumn(
+        "Total # of CUs",
+        help="Total Number of Credit Unions",
+        min_value=0,
+        max_value=100000,
+        step=1,
+        format="localized",),
+        "Affiliated Memberships": st.column_config.NumberColumn(
+        "Affiliated Memberships",
+        help="Number of Affiliated Memberships",
+        min_value=0,
+        max_value=100000000,
+        step=1,
+        format="localized",),
+        "Total Memberships": st.column_config.NumberColumn(
+        "Total CU Memberships",
+        help="Number of Total CU Memberships",
+        min_value=0,
+        max_value=100000000,
+        step=1,
+        format="localized",),
+        "Affiliated Assets": st.column_config.NumberColumn(
+        "Total Affiliated Assets ($)",
+        help="Affiliated Credit Union Total Assets",
+        min_value=0,
+        max_value=1000000000000,
+        step=1,
+        format="localized",),
+        "Total Assets": st.column_config.NumberColumn(
+        "Total CU Assets ($)",
+        help="Credit Union Total Assets",
+        min_value=0,
+        max_value=1000000000000,
+        step=1,
+        format="localized",),
+        #"% CUs Affiliated": st.column_config.NumberColumn(
+        #"CUs Affiliated (%)",
+        #help="Percentage of CUs Affiliated with ACUs",
+        #min_value=0,
+        #max_value=100,
+        #step=1,
+        #format="%.2f",)
+        }
+
+    '''
+    column_configuration = {
         "State": st.column_config.TextColumn(
             "State", max_chars=50
             ),
@@ -360,6 +434,7 @@ else:
         format="%.1f"
         ),
     }
+    '''
      
     with st.sidebar:
         st.title('Monthly Change Reports')
