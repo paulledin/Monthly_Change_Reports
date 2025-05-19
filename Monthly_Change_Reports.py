@@ -423,7 +423,7 @@ else:
         if (selected_report_type == 'Affiliation'):
             st.markdown('#### Affiliation Changes')
         
-            affiliation_type = ['Legacy CUNA','Legacy NAFCU', 'Either / At least 1 Legacy Org']
+            affiliation_type = ['America\'s Credit Unions','Legacy NAFCU', 'Either / At least 1 Legacy Org']
             selected_affiliation_type = st.selectbox('Affiliation Type', affiliation_type)
             st.markdown('---')
         
