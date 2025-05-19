@@ -253,6 +253,8 @@ def getChangeTableFromDB(month, table_name):
         sqlStmt += 'merged_cus' + '_' + convertDateToSystem(month)
     elif(table_name == 'pending'):
         sqlStmt += 'pending_cus' + '_' + convertDateToSystem(month)
+    elif(table_name == 'liquidations'):
+        sqlStmt += 'liquidated_cus' + '_' + convertDateToSystem(month)
 
     
     return (dbConn.session().sql(sqlStmt).to_pandas())
@@ -356,10 +358,11 @@ else:
     
     df_mergers = getChangeTableFromDB(selected_month, 'mergers')
     df_pending = getChangeTableFromDB(selected_month, 'pending')
+    df_liquidated = getChangeTableFromDB(selected_month, 'liquidations')
     #df_mergers = getMergersTable(selected_month)
     
     #df_pending = getPendingTable(selected_month)
-    df_liquidated = getLiquidationsTable(selected_month)
+    #df_liquidated = getLiquidationsTable(selected_month)
     df_name_chgs = getNameChgsTable(selected_month)
     df_mailing_address_chgs = getAddressChgsTable(selected_month, 'mailing')
     df_street_address_chgs = getAddressChgsTable(selected_month, 'street')
