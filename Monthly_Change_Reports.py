@@ -255,10 +255,10 @@ def getChangeTableFromDB(month, table_name):
         sqlStmt += 'pending_cus' + '_' + convertDateToSystem(month)
     elif(table_name == 'liquidations'):
         sqlStmt += 'liquidated_cus' + '_' + convertDateToSystem(month)
+    elif(table_name == 'name_chgs'):
+        sqlStmt += 'name_chgs' + '_' + convertDateToSystem(month)
 
-    
     return (dbConn.session().sql(sqlStmt).to_pandas())
-
 
 ###############################################################################
 #Start building Streamlit App
@@ -351,19 +351,13 @@ else:
     df_afl_table_cuna = getTableAFLTable_from_db(selected_month, 'cuna')
     df_afl_table_nafcu = getTableAFLTable_from_db(selected_month, 'nafcu')
     df_afl_table_either = getTableAFLTable_from_db(selected_month, 'either')
-
-    #df_afl_table_cuna = getAFLTable(selected_month, 'cuna')  
-    #df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
-    #df_afl_table_either = getAFLTable(selected_month, 'either')    
     
     df_mergers = getChangeTableFromDB(selected_month, 'mergers')
     df_pending = getChangeTableFromDB(selected_month, 'pending')
     df_liquidated = getChangeTableFromDB(selected_month, 'liquidations')
-    #df_mergers = getMergersTable(selected_month)
+    df_name_chgs = getChangeTableFromDB(selected_month, 'name_chgs')
     
-    #df_pending = getPendingTable(selected_month)
-    #df_liquidated = getLiquidationsTable(selected_month)
-    df_name_chgs = getNameChgsTable(selected_month)
+    #df_name_chgs = getNameChgsTable(selected_month)
     df_mailing_address_chgs = getAddressChgsTable(selected_month, 'mailing')
     df_street_address_chgs = getAddressChgsTable(selected_month, 'street')
     df_ceo_chgs = getCEOChgsTable(selected_month)
