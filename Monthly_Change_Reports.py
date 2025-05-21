@@ -295,8 +295,8 @@ if (passphrase != thePassPhrase):
         st.markdown('### Please try again or contact: pledin@americascreditunions.org for assistance.')
 else:  
     column_configuration = {
-        "Assets($)": st.column_config.NumberColumn(
-        "Assets",
+        "Assets": st.column_config.NumberColumn(
+        "Assets ($)",
         help="Total Assets",
         min_value=0,
         max_value=1000000000000,
