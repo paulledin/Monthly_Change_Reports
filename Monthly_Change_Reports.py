@@ -315,49 +315,7 @@ else:
         min_value=0,
         max_value=1000000000000,
         step=1,
-        format="localized",),
-       "Fed Chartered": st.column_config.NumberColumn(
-        "Fed Chartered CUs",
-        help="Number of Federally Chartered Credit Unions",
-        min_value=0,
-        max_value=100000,
-        step=1,
-        format="localized",),
-        "Total CUs": st.column_config.NumberColumn(
-        "Total # of CUs",
-        help="Total Number of Credit Unions",
-        min_value=0,
-        max_value=100000,
-        step=1,
-        format="localized",),
-        "Affiliated Memberships": st.column_config.NumberColumn(
-        "Affiliated Memberships",
-        help="Number of Affiliated Memberships",
-        min_value=0,
-        max_value=100000000,
-        step=1,
-        format="localized",),
-        "Total Memberships": st.column_config.NumberColumn(
-        "Total CU Memberships",
-        help="Number of Total CU Memberships",
-        min_value=0,
-        max_value=100000000,
-        step=1,
-        format="localized",),
-        "Affiliated Assets": st.column_config.NumberColumn(
-        "Total Affiliated Assets ($)",
-        help="Affiliated Credit Union Total Assets",
-        min_value=0,
-        max_value=1000000000000,
-        step=1,
-        format="localized",),
-        "Total Assets": st.column_config.NumberColumn(
-        "Total CU Assets ($)",
-        help="Credit Union Total Assets",
-        min_value=0,
-        max_value=1000000000000,
-        step=1,
-        format="localized",),
+        format="localized",)
         }
      
     with st.sidebar:
