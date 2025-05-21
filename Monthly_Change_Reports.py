@@ -280,12 +280,9 @@ def getAFLChgsTableFromDB(month, chg_type, afl_type):
         sqlStmt += "disafl_chgs_" + afl_type + "_" + convertDateToSystem(month) 
 
     return (dbConn.session().sql(sqlStmt).to_pandas())
-
-
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
-#report_periods = get_report_periods_for_display()  
 report_periods = get_report_periods_for_display_from_db()
 
 with st.sidebar:
