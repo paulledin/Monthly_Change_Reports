@@ -302,14 +302,14 @@ else:
         "Assets",
         help="Total Assets",
         min_value=0,
-        max_value=100000,
+        max_value=1000000000000,
         step=1,
         format="localized",),
-        "Non Affiliated CUs": st.column_config.NumberColumn(
-        "Non Affiliated CUs",
-        help="Number of Non-Affiliated Credit Unions",
+        "Members": st.column_config.NumberColumn(
+        "Members",
+        help="Number of Memberships",
         min_value=0,
-        max_value=100000,
+        max_value=1000000000000,
         step=1,
         format="localized",),
         "State Chartered": st.column_config.NumberColumn(
