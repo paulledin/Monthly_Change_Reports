@@ -312,9 +312,9 @@ else:
         max_value=1000000000000,
         step=1,
         format="localized",),
-        "State Chartered": st.column_config.NumberColumn(
-        "State Chartered CUs",
-        help="Number of State Chartered Credit Unions",
+        "Employees": st.column_config.NumberColumn(
+        "Employees",
+        help="Number of Total Employees",
         min_value=0,
         max_value=100000,
         step=1,
