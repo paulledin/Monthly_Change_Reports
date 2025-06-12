@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import altair as alt
 
-from st_oauth import st_oauth
+#from st_oauth import st_oauth
 
 st.set_page_config(
     page_title="America's Credit Unions",
