@@ -232,7 +232,7 @@ def get_report_periods_from_db():
     return (dbConn.session().sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
 
 @st.cache_data
-def getTableAFLTable_from_db(month, afl_type):
+def getAFLTable_from_db(month, afl_type):
     sqlStmt = "SELECT * FROM monthly_report."
     
     if(afl_type == 'Legacy CUNA'):
@@ -285,7 +285,8 @@ def getAFLChgsTableFromDB(month, chg_type, afl_type):
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
-report_periods = get_report_periods_for_display_from_db()
+#report_periods = get_report_periods_for_display_from_db()
+report_periods = get_report_periods_for_display()
 
 with st.sidebar:
     st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
@@ -329,19 +330,33 @@ else:
         month = report_periods['report_periods_formatted']
         selected_month = st.selectbox('Month', month)
 
-    df_afl_table_cuna = getTableAFLTable_from_db(selected_month, 'cuna')
-    df_afl_table_nafcu = getTableAFLTable_from_db(selected_month, 'nafcu')
-    df_afl_table_either = getTableAFLTable_from_db(selected_month, 'either')
+    #df_afl_table_cuna = getAFLTable_from_db(selected_month, 'cuna')
+    #df_afl_table_nafcu = getAFLTable_from_db(selected_month, 'nafcu')
+    #df_afl_table_either = getAFLTable_from_db(selected_month, 'either')
+    df_afl_table_cuna = getAFLTable(selected_month, 'cuna')
+    df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
+    df_afl_table_either = getAFLTable(selected_month, 'either')
     
-    df_mergers = getChangeTableFromDB(selected_month, 'mergers')
-    df_pending = getChangeTableFromDB(selected_month, 'pending')
-    df_liquidated = getChangeTableFromDB(selected_month, 'liquidations')
-    df_name_chgs = getChangeTableFromDB(selected_month, 'name_chgs')
-    df_mailing_address_chgs = getChangeTableFromDB(selected_month, 'mailing_address_chgs')
-    df_street_address_chgs = getChangeTableFromDB(selected_month, 'street_address_chgs')
-    df_ceo_chgs = getChangeTableFromDB(selected_month, 'ceo_chgs')
-    df_charter_chgs = getChangeTableFromDB(selected_month, 'charter_chgs')
-    df_new_cus = getChangeTableFromDB(selected_month, 'new_cus')
+
+    #df_mergers = getChangeTableFromDB(selected_month, 'mergers')
+    #df_pending = getChangeTableFromDB(selected_month, 'pending')
+    #df_liquidated = getChangeTableFromDB(selected_month, 'liquidations')
+    #df_name_chgs = getChangeTableFromDB(selected_month, 'name_chgs')
+    #df_mailing_address_chgs = getChangeTableFromDB(selected_month, 'mailing_address_chgs')
+    #df_street_address_chgs = getChangeTableFromDB(selected_month, 'street_address_chgs')
+    #df_ceo_chgs = getChangeTableFromDB(selected_month, 'ceo_chgs')
+    #df_charter_chgs = getChangeTableFromDB(selected_month, 'charter_chgs')
+    #df_new_cus = getChangeTableFromDB(selected_month, 'new_cus')
+
+    df_mergers = getMergersTable(selected_month)
+    df_pending = getPendingTable(selected_month)
+    df_liquidated = getLiquidationsTable(selected_month)
+    df_name_chgs = getNameChgsTable(selected_month)
+    df_mailing_address_chgs = getAddressChgsTable(selected_month, 'mailing')
+    df_street_address_chgs = getAddressChgsTable(selected_month, 'street')
+    df_ceo_chgs = getCEOChgsTable(selected_month)
+    df_charter_chgs = getCharterChgsTable(selected_month)
+    df_new_cus = getNewCUsTable(selected_month)
 
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
@@ -366,9 +381,9 @@ else:
         st.markdown('*Liquidations:* ' + '**' + str(len(df_liquidated)-1) + '**')
         st.markdown('---')
     
-        df_cuna_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'cuna')
-        df_nafcu_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'nafcu')
-        df_either_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'either')
+        df_cuna_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
+        df_nafcu_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
+        df_either_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
     
         st.markdown('**Reaffiliations**')
         st.markdown('*Reaffiliations:* ' + '**' + str(len(df_cuna_reafl_chgs)-1) + '**')
@@ -387,14 +402,14 @@ else:
             st.markdown('---')
         
             if (selected_affiliation_type == 'Legacy CUNA'):
-                df_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'cuna')
-                df_disafl_chgs = getAFLChgsTableFromDB(selected_month, 'DISAFL', 'cuna')
+                df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'cuna')
+                df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'cuna')
             elif (selected_affiliation_type == 'Legacy NAFCU'):
-                df_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'nafcu')
-                df_disafl_chgs = getAFLChgsTableFromDB(selected_month, 'DISAFL', 'nafcu')
+                df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'nafcu')
+                df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'nafcu')
             else:
-                df_reafl_chgs = getAFLChgsTableFromDB(selected_month, 'REAFL', 'either')
-                df_disafl_chgs = getAFLChgsTableFromDB(selected_month, 'DISAFL', 'either')
+                df_reafl_chgs = getAFLChgsTables(selected_month, 'REAFL', 'either')
+                df_disafl_chgs = getAFLChgsTables(selected_month, 'DISAFL', 'either')
             
             st.markdown('#### Reaffiliations - ' + selected_affiliation_type)
             st.dataframe(data = df_reafl_chgs, 
