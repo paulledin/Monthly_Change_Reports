@@ -367,11 +367,11 @@ else:
         st.markdown('*Affiliated with America\'s CUs:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 1])) + '**')
         st.markdown('---')
     
-        st.markdown('**Affiliation Ratios**')
-        st.markdown('*Credit Unions:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 10] * 100, 2))  + '%**')
-        st.markdown('*Members:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 11] * 100, 2))  + '%**')
-        st.markdown('*Assets:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 12] * 100, 2))  + '%**')
-        st.markdown('---')
+        #st.markdown('**Affiliation Ratios**')
+        #st.markdown('*Credit Unions:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 10] * 100, 2))  + '%**')
+        #st.markdown('*Members:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 11] * 100, 2))  + '%**')
+        #st.markdown('*Assets:* ' + '**' + str(round(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 12] * 100, 2))  + '%**')
+        #st.markdown('---')
     
         st.markdown('**Monthly Totals**')
         st.markdown('*New Credit Unions:* ' + '**' + str(len(df_new_cus)) + '**')
