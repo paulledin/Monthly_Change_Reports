@@ -363,8 +363,8 @@ else:
         st.markdown('### Summary')
         st.markdown('---')
         st.markdown('**Month Ended :: ' + selected_month + '**')
-        st.markdown('*Active Credit Unions:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 5])) + '**')
-        st.markdown('*Affiliated with America\'s CUs:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 1])) + '**')
+        #st.markdown('*Active Credit Unions:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 5])) + '**')
+        #st.markdown('*Affiliated with America\'s CUs:* ' + '**' + str(format_number(df_afl_table_cuna.iloc[len(df_afl_table_cuna) - 1, 1])) + '**')
         st.markdown('---')
     
         #st.markdown('**Affiliation Ratios**')
