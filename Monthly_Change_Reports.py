@@ -333,9 +333,9 @@ else:
     #df_afl_table_cuna = getAFLTable_from_db(selected_month, 'cuna')
     #df_afl_table_nafcu = getAFLTable_from_db(selected_month, 'nafcu')
     #df_afl_table_either = getAFLTable_from_db(selected_month, 'either')
-    df_afl_table_cuna = getAFLTable(selected_month, 'cuna')
-    df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
-    df_afl_table_either = getAFLTable(selected_month, 'either')
+    #df_afl_table_cuna = getAFLTable(selected_month, 'cuna')
+    #df_afl_table_nafcu = getAFLTable(selected_month, 'nafcu')
+    #df_afl_table_either = getAFLTable(selected_month, 'either')
     
 
     #df_mergers = getChangeTableFromDB(selected_month, 'mergers')
